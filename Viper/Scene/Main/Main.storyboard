@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Main-->
+        <scene sceneID="oss-EX-EYQ">
+            <objects>
+                <viewController storyboardIdentifier="Main" title="Main" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4rc-YH-RBc" customClass="VIPER_View_Main" customModule="Viper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dps-v5-Oss"/>
+                        <viewControllerLayoutGuide type="bottom" id="DhA-Hf-WnH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rGa-TL-riY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Scene" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9N-Sg-9sB">
+                                <rect key="frame" x="246" y="61" width="108" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="6US-Sq-T8z"/>
+                                    <constraint firstAttribute="width" constant="108" id="Cl1-gq-wEq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DcT-rl-2VE" customClass="VIPER_RoundedButton" customModule="Viper" customModuleProvider="target">
+                                <rect key="frame" x="194" y="536" width="212" height="30"/>
+                                <color key="backgroundColor" red="0.054901960780000002" green="0.52549019610000003" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="212" id="SCd-xt-QMw"/>
+                                    <constraint firstAttribute="height" constant="30" id="phS-gF-TE6"/>
+                                </constraints>
+                                <state key="normal" title="Stripe">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stripeTochUpInside:" destination="4rc-YH-RBc" eventType="touchUpInside" id="piv-qq-aTF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DhA-Hf-WnH" firstAttribute="top" secondItem="DcT-rl-2VE" secondAttribute="bottom" constant="34" id="3M4-6Y-0ag"/>
+                            <constraint firstItem="DcT-rl-2VE" firstAttribute="centerX" secondItem="rGa-TL-riY" secondAttribute="centerX" id="Ab3-h9-ft8"/>
+                            <constraint firstItem="D9N-Sg-9sB" firstAttribute="top" secondItem="dps-v5-Oss" secondAttribute="bottom" constant="41" id="Ft3-iF-Hx2"/>
+                            <constraint firstItem="D9N-Sg-9sB" firstAttribute="centerX" secondItem="rGa-TL-riY" secondAttribute="centerX" id="NXO-7M-Js1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnStripe" destination="DcT-rl-2VE" id="i89-hN-iZa"/>
+                        <outlet property="labelTitle" destination="D9N-Sg-9sB" id="qKm-Ic-0t9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pn1-iE-K7w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="208" y="438"/>
+        </scene>
+    </scenes>
+</document>
