@@ -9,7 +9,7 @@
 import Foundation
 
 class VIPER_Presenter {
-    var view : VIPER_View?
+    weak var view : VIPER_View?
     var wireframe : VIPER_Wireframe?
     
     

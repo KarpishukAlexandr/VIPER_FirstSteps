@@ -16,6 +16,13 @@ class VIPER_Presenter_Stripe : VIPER_Presenter {
     var interactorPayment : VIPER_Interactor_Payment?
     var interactorServer  : VIPER_Interactor_Server?
     
+    var viewStripe : VIPER_View_Stripe_IO? { //Fix memory leak
+        get {
+            return self.view as? VIPER_View_Stripe_IO
+        }
+        set {} // Fix Compilation Error
+    }
+    
     override func SetupInteractor() {
         self.interactorPayment = self.wireframe?.interactorPayment
         self.interactorServer = self.wireframe?.interactorServer
@@ -24,45 +31,45 @@ class VIPER_Presenter_Stripe : VIPER_Presenter {
     override func SetupConnections() {
         super.SetupConnections()
 
-        var view = self.view as? VIPER_View_Stripe_IO
+   //     let view = self.view as? VIPER_View_Stripe_IO //Memory Leak
 
 //MARK: - Setup View
-        view?.donatePressed = {
+        self.viewStripe?.donatePressed = { [unowned self] in
             let card : VIPER_Entity_Card = VIPER_Entity_Card()
-            card.email = view?.email
-            card.cardNumber = view?.cardNumber
-            card.cvc = view?.cvc
-            let expirationDate = view?.cardExpirationDate?.componentsSeparatedByString("/")
+            card.email = self.viewStripe?.email
+            card.cardNumber = self.viewStripe?.cardNumber
+            card.cvc = self.viewStripe?.cvc
+            let expirationDate = self.viewStripe?.cardExpirationDate?.componentsSeparatedByString("/")
             if (expirationDate?.count == 2) {
                 card.expirationMonth = UInt(NSString(string:expirationDate![0]).integerValue)
                 card.expirationYear  = UInt(NSString(string:expirationDate![1]).integerValue)
             }
-            let price = NSString(string:(view?.price)!).doubleValue
+            let price = NSString(string:(self.viewStripe?.price)!).doubleValue
             
             if (self.interactorPayment?.CreateToken(card, price:price) == false) {
-                view?.ShowMessage("Invalid entered data", ID: self.VALIDATION_INVALID_DATA_MESSAGE_ID)
+                self.viewStripe?.ShowMessage("Invalid entered data", ID: self.VALIDATION_INVALID_DATA_MESSAGE_ID)
             }
         }
         
-        view?.messageDidHide = { (ID:Int)->Void in
+        self.viewStripe?.messageDidHide = { [unowned self] (ID:Int)->Void in
             if (ID == self.VALIDATION_COMLETED_MESSAGE_ID) {
                 self.wireframe?.Pop(true)
             }
         }
-        
+
 //MARK: - Setup Interactors
-        self.interactorPayment?.CreateTokenCompleted = { (card:VIPER_Entity_Card, price:Double)->Void in
-            let price = NSString(string:(view?.price)!).doubleValue
-            self.interactorServer?.ValidateDonate(card.token, email:view?.email, price: price)
+        self.interactorPayment?.CreateTokenCompleted = { [unowned self] (card:VIPER_Entity_Card, price:Double)->Void in
+            let price = NSString(string:(self.viewStripe?.price)!).doubleValue
+            self.interactorServer?.ValidateDonate(card.token, email:self.viewStripe?.email, price: price)
         }
         
-        self.interactorServer?.ValidateCompleted = { (token:String?, email:String?, price:Double?, error:NSError?) -> Void in
+        self.interactorServer?.ValidateCompleted = { [unowned self] (token:String?, email:String?, price:Double?, error:NSError?) -> Void in
             if (error == nil) {
                 LOG("Transaction completed:\nToken: '\(token)'")
             } else {
                 LOG("Transaction completed:\nError: '\(error!)'")
             }
-            view?.ShowMessage("Transaction Completed!", ID: self.VALIDATION_COMLETED_MESSAGE_ID)
+            self.viewStripe?.ShowMessage("Transaction Completed!", ID: self.VALIDATION_COMLETED_MESSAGE_ID)
         }
     }
     

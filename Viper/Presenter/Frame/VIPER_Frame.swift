@@ -34,6 +34,8 @@ class VIPER_Frame {
             curStoryboard = UIStoryboard.init(name: self.storyboardName, bundle: nil)
         }
         
-        self.presenter?.view = curStoryboard?.instantiateViewControllerWithIdentifier(self.storyboardRepresentationID) as? VIPER_View
+        let view = curStoryboard?.instantiateViewControllerWithIdentifier(self.storyboardRepresentationID) as? VIPER_View
+        self.presenter?.view = view
+        view?.presenter = self.presenter
     }
 }

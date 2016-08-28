@@ -11,6 +11,12 @@ import Foundation
 class VIPER_Presenter_Login : VIPER_Presenter {
     
     var interactorServer  : VIPER_Interactor_Server?
+    var viewLogin : VIPER_View_Login_IO? {
+        get {
+            return self.view as? VIPER_View_Login_IO
+        }
+        set{}
+    }
     
     override func SetupInteractor() {
         self.interactorServer = self.wireframe?.interactorServer
@@ -19,16 +25,15 @@ class VIPER_Presenter_Login : VIPER_Presenter {
     override func SetupConnections() {
         super.SetupConnections()
         
-        var view = self.view as? VIPER_View_Login_IO
-        view?.loginPressed = { //[unowned self] in
+        self.viewLogin?.loginPressed = { [unowned self] in
             let user: VIPER_Entity_User = VIPER_Entity_User()
-            user.email = view?.email
-            user.firstName = view?.firstName
-            user.lastName = view?.lastName
+            user.email = self.viewLogin?.email
+            user.firstName = self.viewLogin?.firstName
+            user.lastName = self.viewLogin?.lastName
             self.interactorServer?.Login(user)
         }
         
-        self.interactorServer?.LoginCompleted = { (user:VIPER_Entity_User, error:NSError?)->Void in
+        self.interactorServer?.LoginCompleted = { [unowned self] (user:VIPER_Entity_User, error:NSError?)->Void in
             self.wireframe?.Push(VIPER_FRAME.Main, animated:true)
         }
     }
